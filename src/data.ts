@@ -1,3 +1,8 @@
+declare const __IMG__: string[]
+type Photo = { img: string; alt: string; caption: string }
+// The briefed photo (docs/image-briefs.md) when its file exists in public/img at build time, otherwise the current one. No 404s.
+const pick = (want: Photo, fallback: Photo) => (__IMG__.includes(want.img) ? want : fallback)
+
 export type ColorId = 'asfalto' | 'concreto' | 'sinal' | 'mata'
 
 export const colors: { id: ColorId; name: string; note: string; bike: string; bike2: string; field: string; fieldInk: string; hl: string }[] = [
@@ -30,9 +35,10 @@ export const chapters: {
     unit: 'kg',
     title: 'Nove quilos de bicicleta.',
     text: 'O quadro é de alumínio hidroformado, com a solda lixada à mão, e a bateria mora dentro do tubo inferior. Sem cabo solto, sem peso à toa. Quem mora no terceiro andar sem elevador já entendeu.',
-    img: 'escada-rampa.jpg',
-    alt: 'Escadaria de granito com uma canaleta de metal ao centro para rolar a bicicleta degrau abaixo',
-    caption: 'Escadaria com canaleta para rolar a bicicleta.',
+    ...pick(
+      { img: 'leve-escada.webp', alt: 'Pessoa sobe a escada de um prédio residencial carregando uma bicicleta elétrica grafite apoiada no ombro', caption: 'Terceiro andar, sem elevador.' },
+      { img: 'escada-rampa.jpg', alt: 'Escadaria de granito com uma canaleta de metal ao centro para rolar a bicicleta degrau abaixo', caption: 'Escadaria com canaleta para rolar a bicicleta.' },
+    ),
     callout: { label: 'Quadro · 9,4 kg', x: 54, y: 33, side: 'r' },
   },
   {
@@ -43,9 +49,10 @@ export const chapters: {
     unit: 'N·m',
     title: 'Um motor que não se anuncia.',
     text: 'Motor de 250 W no cubo traseiro e sensor de torque no pedivela. A ajuda chega na proporção da sua pedalada, sem tranco e sem zumbido: 48 dB, menos que uma conversa na calçada.',
-    img: 'faixa-amarela.jpg',
-    alt: 'Duas faixas amarelas pintadas lado a lado sobre asfalto cinza',
-    caption: 'Faixa dupla no asfalto.',
+    ...pick(
+      { img: 'motor-rua.webp', alt: 'Ciclista pedala sozinho por uma rua arborizada e silenciosa no começo da manhã, com luz baixa e alaranjada', caption: 'Rua de bairro, sete da manhã.' },
+      { img: 'faixa-amarela.jpg', alt: 'Duas faixas amarelas pintadas lado a lado sobre asfalto cinza', caption: 'Faixa dupla no asfalto.' },
+    ),
     callout: { label: 'Motor · 250 W', x: 22.2, y: 65.4, side: 'r' },
   },
   {
@@ -56,9 +63,10 @@ export const chapters: {
     unit: 'km',
     title: 'Uma semana de trajeto numa carga.',
     text: 'A bateria de 360 Wh sai do quadro com um giro de chave e carrega na tomada da cozinha em 2 h 40. São 9 km na ida e 9 na volta: cinco dias úteis, e ainda sobra bateria para o sábado.',
-    img: 'orla-ponte.jpg',
-    alt: 'Ciclista segue por uma passarela à beira do rio, com uma ponte estaiada ao fundo',
-    caption: 'Passarela de beira de rio, com ponte ao fundo.',
+    ...pick(
+      { img: 'bateria-cozinha.webp', alt: 'Bateria de bicicleta elétrica carregando sobre a bancada de uma cozinha, ligada à tomada da parede', caption: 'A bateria carrega na tomada da cozinha.' },
+      { img: 'orla-ponte.jpg', alt: 'Ciclista segue por uma passarela à beira do rio, com uma ponte estaiada ao fundo', caption: 'Passarela de beira de rio, com ponte ao fundo.' },
+    ),
     callout: { label: 'Bateria · 360 Wh', x: 58.9, y: 56.7, side: 'r' },
   },
   {
@@ -69,9 +77,10 @@ export const chapters: {
     unit: 'km',
     title: 'Sem corrente, sem graxa na calça.',
     text: 'A correia de carbono dura até 30 mil km, não pede óleo e não faz barulho. A barra da calça chega limpa ao trabalho e continua limpa no bar.',
-    img: 'ciclovia.jpg',
-    alt: 'Ciclista pedala por uma ciclovia entre um gramado e uma árvore florida, com prédios ao fundo',
-    caption: 'Ciclovia entre gramado e árvore florida.',
+    ...pick(
+      { img: 'correia-barra.webp', alt: 'Close da barra de uma calça clara sobre o pedal, ao lado da correia preta de uma bicicleta, sem nenhuma mancha de graxa', caption: 'Barra limpa, correia seca.' },
+      { img: 'ciclovia.jpg', alt: 'Ciclista pedala por uma ciclovia entre um gramado e uma árvore florida, com prédios ao fundo', caption: 'Ciclovia entre gramado e árvore florida.' },
+    ),
     callout: { label: 'Correia · 30 mil km', x: 45.6, y: 70.8, side: 'l' },
   },
 ]
@@ -100,10 +109,16 @@ export const brl = (n: number) => 'R$ ' + n.toLocaleString('pt-BR')
 
 export const points = ['São Paulo · Pinheiros', 'Curitiba · Batel', 'Belo Horizonte · Savassi']
 
-export const credits: { title: string; by: string; lic: string; url: string }[] = [
-  { title: 'Evening Cyclist', by: 'Nick Page Photos', lic: 'CC BY 2.0', url: 'https://www.flickr.com/photos/27506472@N04/8106152459' },
-  { title: 'Rama VIII Bridge & the Chao Phraya River, Bangkok Bicycle Tour', by: 'David McKelvey', lic: 'CC BY 2.0', url: 'https://commons.wikimedia.org/w/index.php?curid=112989780' },
-  { title: 'Bike rail, public stairs', by: 'La Citta Vita', lic: 'CC BY-SA 2.0', url: 'https://www.flickr.com/photos/49539505@N04/4764105631' },
-  { title: 'Yellow Lines', by: 'Tim Sullivan', lic: 'CC0', url: 'https://stocksnap.io/photo/yellow-lines-OJYARI0WOY' },
-  { title: 'Cyclist Super Highway', by: 'Kurayba', lic: 'CC BY-SA 2.0', url: 'https://www.flickr.com/photos/48503330@N08/52141470529' },
+export const ride = pick(
+  { img: 'test-ride-entardecer.webp', alt: 'Ciclista pedala uma bicicleta urbana grafite por uma ciclovia de avenida ao entardecer, com o céu laranja atrás dos prédios', caption: '' },
+  { img: 'ciclista-entardecer.jpg', alt: 'Ciclista em silhueta atravessa uma ponte ao pôr do sol, com o sol entre as grades do guarda-corpo', caption: '' },
+)
+
+// file: the photo each credit belongs to; the footer lists only the ones still in use
+export const credits: { file: string; title: string; by: string; lic: string; url: string }[] = [
+  { file: 'ciclista-entardecer.jpg', title: 'Evening Cyclist', by: 'Nick Page Photos', lic: 'CC BY 2.0', url: 'https://www.flickr.com/photos/27506472@N04/8106152459' },
+  { file: 'orla-ponte.jpg', title: 'Rama VIII Bridge & the Chao Phraya River, Bangkok Bicycle Tour', by: 'David McKelvey', lic: 'CC BY 2.0', url: 'https://commons.wikimedia.org/w/index.php?curid=112989780' },
+  { file: 'escada-rampa.jpg', title: 'Bike rail, public stairs', by: 'La Citta Vita', lic: 'CC BY-SA 2.0', url: 'https://www.flickr.com/photos/49539505@N04/4764105631' },
+  { file: 'faixa-amarela.jpg', title: 'Yellow Lines', by: 'Tim Sullivan', lic: 'CC0', url: 'https://stocksnap.io/photo/yellow-lines-OJYARI0WOY' },
+  { file: 'ciclovia.jpg', title: 'Cyclist Super Highway', by: 'Kurayba', lic: 'CC BY-SA 2.0', url: 'https://www.flickr.com/photos/48503330@N08/52141470529' },
 ]

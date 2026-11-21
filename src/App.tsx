@@ -7,7 +7,7 @@ import CountUp from './react-bits/CountUp'
 import Magnet from './react-bits/Magnet'
 import ShinyText from './react-bits/ShinyText'
 import TiltedCard from './react-bits/TiltedCard'
-import { chapters, credits, specs, type ColorId, type ModelId } from './data'
+import { chapters, credits as allCredits, ride, specs, type ColorId, type ModelId } from './data'
 import { initScroll } from './scroll'
 import { can3D, Mini, Stage } from './Stage'
 import { TestRide } from './TestRide'
@@ -20,6 +20,9 @@ const num = (s: string) => {
   const m = s.match(/^(\d+(?:,\d+)?)(.*)$/)
   return m ? { to: parseFloat(m[1].replace(',', '.')), dec: (m[1].split(',')[1] ?? '').length, rest: m[2] } : null
 }
+
+const used = new Set([ride.img, ...chapters.map((c) => c.img)])
+const credits = allCredits.filter((c) => used.has(c.file))
 
 export default function App() {
   const [colorId, setColor] = useState<ColorId>('asfalto')
@@ -110,12 +113,12 @@ export default function App() {
           <p className="foot-end">2026 · <a href="#topo">Privacidade</a></p>
         </div>
         <p className="foot-note">Projeto de portfólio, marca fictícia: Vélo Nove não existe e nada aqui está à venda.</p>
-        <p className="foot-credits">
+        {credits.length > 0 && <p className="foot-credits">
           Fotos:{' '}
           {credits.map((c, i) => (
             <span key={c.url}><a href={c.url} rel="noopener">{c.title}</a>, {c.by} ({c.lic}){i < credits.length - 1 ? '; ' : '.'}</span>
           ))}
-        </p>
+        </p>}
       </footer>
     </ClickSpark>
   )
