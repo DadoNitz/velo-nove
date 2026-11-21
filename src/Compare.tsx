@@ -10,7 +10,7 @@ export function Compare({ setModel }: { setModel: (m: ModelId) => void }) {
   const [km, setKm] = useState(18)
   const rows: [string, (m: (typeof models)[number]) => string][] = [
     ['Preço', (m) => brl(m.price)],
-    ['Parcelado', (m) => `12x de ${brl(Math.round(m.price / 12))}`],
+    ['Parcelado', (m) => `12x ${brl(Math.round(m.price / 12))}`],
     ['Peso', (m) => m.weight],
     ['Autonomia', (m) => `${m.range} km`],
     ['Recarga', (m) => every(km, m.range)],
