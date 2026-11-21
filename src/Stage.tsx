@@ -3,6 +3,26 @@ import { Bike } from './Bike'
 import { chapters, colors, type ColorId } from './data'
 import { createSpring, reduced } from './spring'
 
+export const stageVars = (c: (typeof colors)[number]) => {
+  const dark = c.fieldInk !== '#050f16'
+  return {
+    '--field': c.field, '--field-ink': c.fieldInk,
+    '--tyre': dark ? '#55646c' : '#12181c', '--rim': dark ? '#aab5ba' : '#c9ced0', '--steel': dark ? '#c4ccd0' : '#7d878c',
+  } as CSSProperties
+}
+
+// Phone only: the pinned stage does not fit, so each chapter carries its own small view of the bike.
+export function Mini({ colorId, focus, tag }: { colorId: ColorId; focus?: string; tag?: string }) {
+  const c = colors.find((x) => x.id === colorId)!
+  const style = { ...stageVars(c), '--bike': c.bike, '--bike2': c.bike2, '--hl': c.hl } as CSSProperties
+  return (
+    <div className="mini" style={style} data-focus={focus ?? ''}>
+      <Bike label={`Bicicleta Vélo Nove na cor ${c.name}`} />
+      {tag && <b>{tag}</b>}
+    </div>
+  )
+}
+
 type Springs = { x: ReturnType<typeof createSpring>; o: ReturnType<typeof createSpring>; seq: number }
 
 // Pinned half of the page: the bike, the 9 km odometer, and the callout of the chapter being read.
@@ -34,11 +54,7 @@ export function Stage({ colorId, active }: { colorId: ColorId; active: number })
     return () => clearTimeout(t)
   }, [target, shown.id])
 
-  const dark = target.fieldInk !== '#050f16'
-  const style = {
-    '--field': target.field, '--field-ink': target.fieldInk,
-    '--tyre': dark ? '#55646c' : '#12181c', '--rim': dark ? '#aab5ba' : '#c9ced0', '--steel': dark ? '#c4ccd0' : '#7d878c',
-  } as CSSProperties
+  const style = stageVars(target)
   const bikeStyle = { '--bike': shown.bike, '--bike2': shown.bike2, '--hl': shown.hl } as CSSProperties
   const focus = active >= 0 ? chapters[active].focus : ''
   return (

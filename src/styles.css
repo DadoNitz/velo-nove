@@ -4,14 +4,14 @@
   --ink: #050f16;
   --muted: #4a1d05;       /* secondary ink on orange, 6:1 */
   --paper: #ffffff;
-  --paper-2: #f4efe6;
-  --on-ink: #f4efe6;
+  --paper-2: #f1f2ee;
+  --on-ink: #f2f3f0;
   --m: 20px;              /* the one outer margin */
   --gut: clamp(32px, 4.5vw, 72px);
   --nav-h: 60px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   /* five type steps */
-  --s-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --s-small: 0.9375rem;
   --s-body: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
   --s-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
   --s-head: clamp(1.875rem, 1.3rem + 2vw, 2.75rem);
@@ -72,7 +72,7 @@ html[data-nav='ink'] .nav { transform: translateY(-100%); }
 .stage {
   position: sticky; top: var(--m); align-self: start; height: calc(100svh - 2 * var(--m)); margin: var(--m) 0 var(--m) var(--m);
   display: grid; grid-template-rows: auto 1fr auto; padding: clamp(20px, 2.4vw, 36px); overflow: hidden;
-  background: var(--field, #ece6da); color: var(--field-ink, var(--ink));
+  background: var(--field, #e4e7e3); color: var(--field-ink, var(--ink));
   transition: background-color 0.7s var(--ease), color 0.7s var(--ease);
 }
 .stage-name { font-size: var(--s-small); font-weight: 600; }
@@ -98,6 +98,7 @@ html[data-nav='ink'] .nav { transform: translateY(-100%); }
 .callout i { width: 16px; height: 16px; border-radius: 50%; background: var(--hl); border: 3px solid var(--field); }
 .callout b { background: var(--field-ink); color: var(--field); padding: 8px 12px; font-size: var(--s-small); font-weight: 600; line-height: 1.2; }
 
+.mini { display: none; }
 .stage-foot { display: grid; gap: 14px; }
 .odo { font-size: var(--s-display); line-height: 1; letter-spacing: -0.03em; font-weight: 500; font-variant-numeric: tabular-nums; }
 .odo em { font-style: normal; font-size: var(--s-small); letter-spacing: 0; font-weight: 600; margin-left: 4px; }
@@ -165,9 +166,10 @@ thead th { padding-top: 24px; padding-bottom: 20px; }
 
 /* ---------- test-ride: last photograph, text beside ---------- */
 .ride { position: relative; min-height: 90svh; background: var(--ink); color: var(--on-ink); display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--m); padding: 0 var(--m); overflow: hidden; }
-.ride-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 28% 50%; filter: brightness(0.62); scale: 1.08; transition: scale 2.2s var(--ease); }
+.ride::before { content: ''; position: absolute; inset: 0; z-index: 1; background: rgba(5, 15, 22, 0.4); }
+.ride-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 28% 50%; filter: brightness(0.6); scale: 1.08; transition: scale 2.2s var(--ease); }
 .ride.in .ride-img { scale: 1; }
-.ride-box { position: relative; grid-column: 7 / 13; align-self: end; padding: clamp(72px, 10vh, 120px) 0 clamp(48px, 8vh, 96px); display: flex; flex-direction: column; gap: 20px; }
+.ride-box { position: relative; z-index: 2; grid-column: 7 / 13; align-self: end; padding: clamp(72px, 10vh, 120px) 0 clamp(48px, 8vh, 96px); display: flex; flex-direction: column; gap: 20px; }
 .ride h2 { max-width: 16ch; }
 .ride p { max-width: 42ch; }
 .ride form { display: grid; gap: 16px; margin-top: 8px; max-width: 520px; }
@@ -184,7 +186,7 @@ thead th { padding-top: 24px; padding-bottom: 20px; }
 .foot-line { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: baseline; }
 .foot-links { display: flex; gap: 24px; }
 .foot-end { text-align: right; }
-.foot-note, .foot-credits { max-width: 110ch; font-size: 0.8125rem; line-height: 1.5; }
+.foot-note, .foot-credits { max-width: 110ch; line-height: 1.5; }
 
 /* ---------- motion layer: entrances ---------- */
 .reveal-ready .rv { opacity: 0; transform: translateY(24px); }
@@ -202,31 +204,32 @@ thead th { padding-top: 24px; padding-bottom: 20px; }
   .callout { translate: 0 0; }
 }
 
-/* ---------- phone: the stage becomes a pinned strip, then the story scrolls under it ---------- */
+/* ---------- phone: no pin (it would sit over the text); each chapter carries its own bike ---------- */
 @media (max-width: 860px) {
   :root { --m: 16px; --nav-h: 56px; }
   .nav { left: 0; padding: 0 var(--m); gap: 18px; }
   .hide-s { display: none; }
   .split { grid-template-columns: 1fr; padding-top: var(--nav-h); }
-  .stage { top: var(--nav-h); margin: 0; height: 46svh; z-index: 5; padding: 14px 16px; }
-  .odo { font-size: var(--s-lead); }
-  .odo em { font-size: var(--s-small); }
-  .col { padding: 0 var(--m); position: relative; z-index: 1; }
-  .hero { min-height: calc(100svh - var(--nav-h) - 46svh); padding: 28px 0 28px; gap: 40px; }
+  .stage { position: relative; top: 0; margin: 0; height: 40svh; min-height: 260px; padding: 14px 16px; }
+  .stage-foot, .callout { display: none; }
+  .mini { display: block; position: relative; padding: 16px; background: var(--field); color: var(--field-ink); margin: 0 calc(-1 * var(--m)); }
+  .mini b { display: inline-block; margin-top: 12px; background: var(--field-ink); color: var(--field); padding: 8px 12px; font-size: var(--s-small); font-weight: 600; line-height: 1.2; }
+  .col { padding: 0 var(--m); }
+  .hero { min-height: calc(100svh - var(--nav-h) - 40svh); padding: 28px 0; gap: 40px; }
   .hero-top { gap: 20px; }
   .wordmark { font-size: 19vw; }
-  .chapter { min-height: 60svh; padding: 72px 0; }
+  .chapter { min-height: 0; padding: 72px 0; }
   .specs dl > div { grid-template-columns: 96px 1fr; column-gap: 16px; }
-  .specs dd { font-size: 1rem; }
   .config { padding-bottom: 100px; }
   .km { grid-template-columns: 1fr auto; }
   .km label { grid-column: 1 / -1; }
-  th, td { padding: 12px 8px; font-size: 0.9375rem; }
+  th, td { padding: 12px 8px; font-size: var(--s-small); }
   .m-role { display: none; }
   tbody th { width: 24%; }
-  .m-name { font-size: 1.0625rem; }
+  .m-name { font-size: var(--s-body); }
   .ride { display: block; padding: 0; }
   .ride-img { position: relative; height: 70svh; }
+  .ride::before { display: none; }
   .ride-box { padding: 40px var(--m) 56px; }
   .field-row { grid-template-columns: 1fr; }
   .foot { padding-top: 20svh; }

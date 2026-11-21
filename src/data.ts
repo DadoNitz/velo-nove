@@ -1,9 +1,9 @@
 export type ColorId = 'asfalto' | 'concreto' | 'sinal' | 'mata'
 
 export const colors: { id: ColorId; name: string; note: string; bike: string; bike2: string; field: string; fieldInk: string; hl: string }[] = [
-  { id: 'asfalto', name: 'Asfalto', note: 'Grafite fosco, o tom de quem não quer ser notado.', bike: '#34444d', bike2: '#1d282e', field: '#ece6da', fieldInk: '#050f16', hl: '#ff7a1f' },
-  { id: 'concreto', name: 'Concreto', note: 'Cinza claro de calçada recém-lavada.', bike: '#cdc8bc', bike2: '#a29d90', field: '#16262f', fieldInk: '#f4efe6', hl: '#ff7a1f' },
-  { id: 'sinal', name: 'Sinal', note: 'Laranja de cone de obra: ninguém diz que não viu.', bike: '#ff7a1f', bike2: '#cf5a0a', field: '#050f16', fieldInk: '#f4efe6', hl: '#ffffff' },
+  { id: 'asfalto', name: 'Asfalto', note: 'Grafite fosco, o tom de quem não quer ser notado.', bike: '#34444d', bike2: '#1d282e', field: '#e4e7e3', fieldInk: '#050f16', hl: '#ff7a1f' },
+  { id: 'concreto', name: 'Concreto', note: 'Cinza claro de calçada recém-lavada.', bike: '#cdc8bc', bike2: '#a29d90', field: '#16262f', fieldInk: '#f2f3f0', hl: '#ff7a1f' },
+  { id: 'sinal', name: 'Sinal', note: 'Laranja de cone de obra: ninguém diz que não viu.', bike: '#ff7a1f', bike2: '#cf5a0a', field: '#050f16', fieldInk: '#f2f3f0', hl: '#ffffff' },
   { id: 'mata', name: 'Mata', note: 'Verde fechado, de praça com sombra boa.', bike: '#2f6b4f', bike2: '#1b402e', field: '#dfe8d9', fieldInk: '#050f16', hl: '#ff7a1f' },
 ]
 

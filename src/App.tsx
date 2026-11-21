@@ -4,7 +4,7 @@ import { Configurator } from './Configurator'
 import { CountUp } from './CountUp'
 import { chapters, credits, specs, type ColorId, type ModelId } from './data'
 import { initScroll } from './scroll'
-import { Stage } from './Stage'
+import { Mini, Stage } from './Stage'
 import { TestRide } from './TestRide'
 
 const num = (s: string) => {
@@ -45,6 +45,7 @@ export default function App() {
             <div id="historia">
               {chapters.map((c) => (
                 <section key={c.id} className="chapter" data-sec data-nav="orange" aria-labelledby={`${c.id}-t`}>
+                  <div className="rv"><Mini colorId={colorId} focus={c.focus} tag={c.callout.label} /></div>
                   <p className="figure rv"><CountUp to={c.value} dec={c.dec} /> <span className="unit">{c.unit}</span></p>
                   <h2 id={`${c.id}-t`} className="rv">{c.title}</h2>
                   <p className="rv">{c.text}</p>
