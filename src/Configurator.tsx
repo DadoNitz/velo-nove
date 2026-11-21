@@ -4,12 +4,12 @@ import { Mini } from './Stage'
 import { brl, colors, type ColorId } from './data'
 
 // The live thing: pick a colour and the pinned bike changes (see Stage).
-export function Configurator({ colorId, setColor }: { colorId: ColorId; setColor: (c: ColorId) => void }) {
+export function Configurator({ colorId, setColor, three }: { colorId: ColorId; setColor: (c: ColorId) => void; three: boolean }) {
   const cur = colors.find((c) => c.id === colorId)!
   return (
     <section className="config" id="cor" data-sec data-nav="orange" aria-labelledby="cor-t">
       <h2 id="cor-t"><BlurText text="Escolha a sua cor." delay={70} /></h2>
-      <div className="rv mini-wrap"><Mini colorId={colorId} /></div>
+      <div className="rv mini-wrap"><Mini colorId={colorId} three={three} /></div>
       <p className="rv">A bicicleta troca na hora. São quatro cores de série, todas pelo mesmo preço.</p>
       <div className="swatches rv" role="radiogroup" aria-label="Cor da bicicleta">
         {colors.map((c) => (

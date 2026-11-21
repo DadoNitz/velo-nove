@@ -16,7 +16,8 @@ export function createSpring(initial: number, onUpdate: (v: number) => void, res
     raf = requestAnimationFrame(tick)
   }
   return {
-    to(t: number) { target = t; if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick) } },
+    // vel: hand off the gesture's release velocity (units/s) so drag and spring have no seam
+    to(t: number, vel?: number) { target = t; if (vel !== undefined) v = vel; if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick) } },
     set(t: number) { x = target = t; v = 0; onUpdate(x) },
     get: () => x,
   }

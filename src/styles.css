@@ -253,3 +253,17 @@ thead th { padding-top: 24px; padding-bottom: 20px; }
 h2 > span { max-width: 20ch; }
 .ride h2 > span { max-width: 16ch; }
 html { overflow-x: clip; }  /* the 3D tilt on the photos pokes a few px past the column */
+
+/* ---------- 3D bike over the drawing (cross-fade at the side view) ---------- */
+.w3d { position: relative; }
+.bike-box > .w3d, .w3d-flat:has(.bike-wrap) { position: absolute; inset: 0; }
+.w3d-flat { transition: opacity 0.35s var(--ease); }
+.w3d[data-3d='true'] > .w3d-flat { opacity: 0; }
+.b3d {
+  position: absolute; inset: -8% -6%; opacity: 0; visibility: hidden; cursor: grab; touch-action: pan-y; -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.35s var(--ease), visibility 0s 0.35s;
+}
+.b3d canvas { display: block; width: 100%; height: 100%; }
+.b3d[data-grab] { cursor: grabbing; }
+.w3d[data-3d='true'] > .b3d { opacity: 1; visibility: visible; transition: opacity 0.35s var(--ease); }
+.b3d:focus-visible { outline: 3px solid var(--field-ink); outline-offset: -3px; }
