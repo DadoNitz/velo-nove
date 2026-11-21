@@ -1,3 +1,5 @@
+import BlurText from './react-bits/BlurText'
+import Magnet from './react-bits/Magnet'
 import { Mini } from './Stage'
 import { brl, colors, type ColorId } from './data'
 
@@ -6,7 +8,7 @@ export function Configurator({ colorId, setColor }: { colorId: ColorId; setColor
   const cur = colors.find((c) => c.id === colorId)!
   return (
     <section className="config" id="cor" data-sec data-nav="orange" aria-labelledby="cor-t">
-      <h2 id="cor-t" className="rv">Escolha a sua cor.</h2>
+      <h2 id="cor-t"><BlurText text="Escolha a sua cor." delay={70} /></h2>
       <div className="rv mini-wrap"><Mini colorId={colorId} /></div>
       <p className="rv">A bicicleta troca na hora. São quatro cores de série, todas pelo mesmo preço.</p>
       <div className="swatches rv" role="radiogroup" aria-label="Cor da bicicleta">
@@ -20,7 +22,7 @@ export function Configurator({ colorId, setColor }: { colorId: ColorId; setColor
       </div>
       <p className="swatch-note rv" aria-live="polite"><strong>{cur.name}.</strong> {cur.note}</p>
       <p className="price rv"><span className="num">{brl(11900)}</span><small>ou 12x de R$ 992 sem juros</small></p>
-      <a className="btn rv" href="#test-ride">Agendar test-ride nesta cor</a>
+      <Magnet padding={70} magnetStrength={4} maxOffset={14} wrapperClassName="rv" style={{ display: 'inline-block' }}><a className="btn" href="#test-ride">Agendar test-ride nesta cor</a></Magnet>
     </section>
   )
 }

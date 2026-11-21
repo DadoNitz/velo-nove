@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react'
 import { Compare } from './Compare'
 import { Configurator } from './Configurator'
-import { CountUp } from './CountUp'
+import BlurText from './react-bits/BlurText'
+import ClickSpark from './react-bits/ClickSpark'
+import CountUp from './react-bits/CountUp'
+import Magnet from './react-bits/Magnet'
+import ShinyText from './react-bits/ShinyText'
+import TiltedCard from './react-bits/TiltedCard'
 import { chapters, credits, specs, type ColorId, type ModelId } from './data'
 import { initScroll } from './scroll'
 import { Mini, Stage } from './Stage'
 import { TestRide } from './TestRide'
+
+const Cta = ({ href, children }: { href: string; children: string }) => (
+  <Magnet padding={70} magnetStrength={4} maxOffset={14} wrapperClassName="rv" style={{ display: 'inline-block' }}><a className="btn" href={href}>{children}</a></Magnet>
+)
 
 const num = (s: string) => {
   const m = s.match(/^(\d+(?:,\d+)?)(.*)$/)
@@ -20,7 +29,7 @@ export default function App() {
   useEffect(() => initScroll(setActive), [])
 
   return (
-    <>
+    <ClickSpark sparkColor="#ff7a1f" sparkCount={9} sparkSize={12} sparkRadius={26} duration={520} layer="front">
       <a className="skip" href="#historia">Ir para o conteúdo</a>
       <nav className="nav" aria-label="Principal">
         <a href="#historia" className="hide-s">História</a>
@@ -37,20 +46,20 @@ export default function App() {
               <div className="hero-top">
                 <h1 className="rv">A elétrica urbana de 9 quilos.</h1>
                 <p className="lead rv">Alumínio, correia sem graxa e 90 km por carga. A partir de R$ 11.900.</p>
-                <a className="btn rv" href="#test-ride">Agendar test-ride</a>
+                <Cta href="#test-ride">Agendar test-ride</Cta>
               </div>
-              <p className="wordmark rv" id="wordmark">vélo nove</p>
+              <p className="wordmark rv" id="wordmark"><ShinyText text="vélo nove" color="#050f16" shineColor="#fff3e6" speed={3} delay={2} trigger="loop" /></p>
             </header>
 
             <div id="historia">
               {chapters.map((c) => (
                 <section key={c.id} className="chapter" data-sec data-nav="orange" aria-labelledby={`${c.id}-t`}>
                   <div className="rv mini-wrap"><Mini colorId={colorId} focus={c.focus} /></div>
-                  <p className="figure rv"><CountUp to={c.value} dec={c.dec} /> <span className="unit">{c.unit}</span></p>
-                  <h2 id={`${c.id}-t`} className="rv">{c.title}</h2>
+                  <p className="figure rv"><CountUp to={c.value} decimals={c.dec} mode="roll" duration={1.6} className="num" /> <span className="unit">{c.unit}</span></p>
+                  <h2 id={`${c.id}-t`}><BlurText text={c.title} delay={70} /></h2>
                   <p className="rv">{c.text}</p>
                   <figure className="photo rv">
-                    <img src={`img/${c.img}`} width="1024" height="640" loading="lazy" decoding="async" alt={c.alt} />
+                    <TiltedCard imageSrc={`img/${c.img}`} altText={c.alt} containerHeight="auto" imageWidth="100%" imageHeight="auto" rotateAmplitude={9} scaleOnHover={1.03} glare={0.25} radius={0} />
                     <figcaption>{c.caption}</figcaption>
                   </figure>
                 </section>
@@ -58,13 +67,13 @@ export default function App() {
             </div>
 
             <section className="specs" id="ficha" data-sec data-nav="orange" aria-labelledby="ficha-t">
-              <h2 id="ficha-t" className="rv">Ficha técnica</h2>
+              <h2 id="ficha-t"><BlurText text="Ficha técnica" delay={70} /></h2>
               <dl className="rv">
                 {specs.map(([fig, txt]) => {
                   const n = num(fig)
                   return (
                     <div key={fig}>
-                      <dt>{n ? <><CountUp to={n.to} dec={n.dec} />{n.rest}</> : fig}</dt>
+                      <dt>{n ? <><CountUp to={n.to} decimals={n.dec} className="num" />{n.rest}</> : fig}</dt>
                       <dd>{txt}</dd>
                     </div>
                   )
@@ -94,6 +103,6 @@ export default function App() {
           ))}
         </p>
       </footer>
-    </>
+    </ClickSpark>
   )
 }

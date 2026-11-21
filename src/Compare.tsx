@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import BlurText from './react-bits/BlurText'
 import { brl, models, type ModelId } from './data'
 
 const every = (km: number, range: number) => {
@@ -22,7 +23,7 @@ export function Compare({ setModel }: { setModel: (m: ModelId) => void }) {
   ]
   return (
     <section className="compare" id="modelos" data-sec data-nav="paper" aria-labelledby="mod-t">
-      <h2 id="mod-t" className="rv">Três modelos. Escolha pelo seu trajeto.</h2>
+      <h2 id="mod-t"><BlurText text="Três modelos. Escolha pelo seu trajeto." delay={70} /></h2>
       <div className="km rv">
         <label htmlFor="km">Quanto você pedala por dia?</label>
         <input id="km" type="range" min="4" max="80" step="2" value={km} onChange={(e) => setKm(+e.target.value)} />

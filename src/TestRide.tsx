@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import BlurText from './react-bits/BlurText'
 import { colors, models, points, type ColorId, type ModelId } from './data'
 
 // No backend: the form opens the visitor's e-mail with the request already written.
@@ -25,7 +26,7 @@ export function TestRide({ colorId, modelId }: { colorId: ColorId; modelId: Mode
     <section className="ride" id="test-ride" data-sec data-nav="ink" aria-labelledby="ride-t">
       <img className="ride-img" src="img/ciclista-entardecer.jpg" width="1024" height="683" loading="lazy" decoding="async" alt="Ciclista em silhueta atravessa uma ponte ao pôr do sol, com o sol entre as grades do guarda-corpo" />
       <div className="ride-box">
-        <h2 id="ride-t" className="rv">Pedale os 9 km antes de decidir.</h2>
+        <h2 id="ride-t"><BlurText text="Pedale os 9 km antes de decidir." delay={70} /></h2>
         <p className="rv">Test-ride grátis de 30 minutos em um dos pontos Nove. Leve um documento com foto; o capacete é por nossa conta.</p>
         <form className="rv" onSubmit={submit}>
           <div className="field">

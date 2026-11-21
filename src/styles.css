@@ -247,3 +247,8 @@ thead th { padding-top: 24px; padding-bottom: 20px; }
   .foot-links { flex-wrap: wrap; gap: 8px 20px; }
   .foot-end { text-align: left; }
 }
+
+/* ---------- React Bits integration ---------- */
+.photo .tilted-card__body { aspect-ratio: 8 / 5; }
+h2 > span { max-width: 20ch; }
+.ride h2 > span { max-width: 16ch; }
