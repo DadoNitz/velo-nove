@@ -91,7 +91,7 @@ function build(c: (typeof colors)[number]) {
   const shadow = add(new THREE.PlaneGeometry(10, 2.4), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, depthWrite: false }), new THREE.Vector3(0, -1.92, 0))
   shadow.rotation.x = -Math.PI / 2
 
-  return { g, paint, accent }
+  return { g, paint, accent, rubber }
 }
 
 export default function Bike3D({ colorId, on, label, onReady }: { colorId: ColorId; on: boolean; label: string; onReady: () => void }) {
@@ -112,7 +112,7 @@ export default function Bike3D({ colorId, on, label, onReady }: { colorId: Color
     scene.add(sun)
     const cam = new THREE.PerspectiveCamera(20, 1, 0.1, 100)
     const first = colors.find((c) => c.id === colorId)!
-    const { g, paint, accent } = build(first)
+    const { g, paint, accent, rubber } = build(first)
     g.rotation.x = 0.06
     scene.add(g)
 
@@ -136,13 +136,16 @@ export default function Bike3D({ colorId, on, label, onReady }: { colorId: Color
     // rotation: rotation (Apple's table) = damping 0.8, response 0.4
     const yaw = createSpring(0, (v) => { g.rotation.y = v; render() }, 0.5, 0.8)
     // colour: progress 0→1 between the live colour and the new one, so a second pick mid-way blends from where it is
-    const from = { a: new THREE.Color(), b: new THREE.Color() }, to = { a: new THREE.Color(first.bike), b: new THREE.Color(first.bike2) }
-    const mix = createSpring(1, (p) => { paint.color.lerpColors(from.a, to.a, p); accent.color.lerpColors(from.b, to.b, p); render() }, 0.45)
+    // tyres lighten on the dark fields, like the SVG's --tyre
+    const tyre = (c: (typeof colors)[number]) => (c.fieldInk === '#050f16' ? '#15191b' : '#4a575e')
+    rubber.color.set(tyre(first))
+    const from = { a: new THREE.Color(), b: new THREE.Color(), c: new THREE.Color() }, to = { a: new THREE.Color(first.bike), b: new THREE.Color(first.bike2), c: new THREE.Color(tyre(first)) }
+    const mix = createSpring(1, (p) => { paint.color.lerpColors(from.a, to.a, p); accent.color.lerpColors(from.b, to.b, p); rubber.color.lerpColors(from.c, to.c, p); render() }, 0.45)
     api.current = {
       color(id) {
         const c = colors.find((x) => x.id === id)!
-        from.a.copy(paint.color); from.b.copy(accent.color)
-        to.a.set(c.bike); to.b.set(c.bike2)
+        from.a.copy(paint.color); from.b.copy(accent.color); from.c.copy(rubber.color)
+        to.a.set(c.bike); to.b.set(c.bike2); to.c.set(tyre(c))
         mix.set(0); mix.to(1)
       },
       // turn to the three-quarter view when shown, back to the side view (= the SVG) when hidden
