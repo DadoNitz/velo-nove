@@ -45,7 +45,7 @@ export default function App() {
             <div id="historia">
               {chapters.map((c) => (
                 <section key={c.id} className="chapter" data-sec data-nav="orange" aria-labelledby={`${c.id}-t`}>
-                  <div className="rv"><Mini colorId={colorId} focus={c.focus} tag={c.callout.label} /></div>
+                  <div className="rv mini-wrap"><Mini colorId={colorId} focus={c.focus} /></div>
                   <p className="figure rv"><CountUp to={c.value} dec={c.dec} /> <span className="unit">{c.unit}</span></p>
                   <h2 id={`${c.id}-t`} className="rv">{c.title}</h2>
                   <p className="rv">{c.text}</p>

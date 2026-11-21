@@ -98,7 +98,7 @@ html[data-nav='ink'] .nav { transform: translateY(-100%); }
 .callout i { width: 16px; height: 16px; border-radius: 50%; background: var(--hl); border: 3px solid var(--field); }
 .callout b { background: var(--field-ink); color: var(--field); padding: 8px 12px; font-size: var(--s-small); font-weight: 600; line-height: 1.2; }
 
-.mini { display: none; }
+.mini-wrap { display: none; }
 .stage-foot { display: grid; gap: 14px; }
 .odo { font-size: var(--s-display); line-height: 1; letter-spacing: -0.03em; font-weight: 500; font-variant-numeric: tabular-nums; }
 .odo em { font-style: normal; font-size: var(--s-small); letter-spacing: 0; font-weight: 600; margin-left: 4px; }
@@ -209,16 +209,23 @@ thead th { padding-top: 24px; padding-bottom: 20px; }
   :root { --m: 16px; --nav-h: 56px; }
   .nav { left: 0; padding: 0 var(--m); gap: 18px; }
   .hide-s { display: none; }
+  .nav .nav-cta { background: none; color: inherit; padding: 8px 2px; text-decoration: underline; text-underline-offset: 0.3em; }
   .split { grid-template-columns: 1fr; padding-top: var(--nav-h); }
   .stage { position: relative; top: 0; margin: 0; height: 40svh; min-height: 260px; padding: 14px 16px; }
   .stage-foot, .callout { display: none; }
-  .mini { display: block; position: relative; padding: 16px; background: var(--field); color: var(--field-ink); margin: 0 calc(-1 * var(--m)); }
+  .mini-wrap { display: block; }
+  .mini { position: relative; padding: 16px; background: var(--field); color: var(--field-ink); margin: 0 calc(-1 * var(--m)); }
   .mini b { display: inline-block; margin-top: 12px; background: var(--field-ink); color: var(--field); padding: 8px 12px; font-size: var(--s-small); font-weight: 600; line-height: 1.2; }
   .col { padding: 0 var(--m); }
   .hero { min-height: calc(100svh - var(--nav-h) - 40svh); padding: 28px 0; gap: 40px; }
   .hero-top { gap: 20px; }
-  .wordmark { font-size: 19vw; }
-  .chapter { min-height: 0; padding: 72px 0; }
+  .wordmark { font-size: 19vw; margin-top: 96px; }
+  .chapter { min-height: 0; padding: 56px 0; }
+  .specs { padding: 56px 0; }
+  .config { padding-top: 56px; }
+  .config > .mini-wrap { align-self: stretch; }
+  .swatches { gap: 12px; padding: 16px; justify-content: space-between; }
+  .chip { width: min(72px, 18vw); }
   .specs dl > div { grid-template-columns: 96px 1fr; column-gap: 16px; }
   .config { padding-bottom: 100px; }
   .km { grid-template-columns: 1fr auto; }
