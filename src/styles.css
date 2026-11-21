@@ -140,7 +140,7 @@ html[data-nav='ink'] .nav { transform: translateY(-100%); }
 .chip { width: clamp(64px, 8vw, 88px); aspect-ratio: 1; transition: scale 0.15s ease-out, outline-offset 0.3s var(--ease); outline: 0 solid #fff; }
 .swatch:active .chip { scale: 0.94; }
 .swatch input:checked + .chip { outline: 4px solid #fff; outline-offset: 5px; }
-.swatch input:focus-visible + .chip { box-shadow: 0 0 0 4px var(--ink), 0 0 0 8px var(--bg); }
+.swatch input:focus-visible + .chip { outline: 4px solid var(--bg); outline-offset: 5px; }
 .swatch-note { min-height: 3.2em; }
 .price { font-size: var(--s-body); }
 .price .num { display: block; font-size: var(--s-display); line-height: 1; letter-spacing: -0.03em; font-weight: 500; }
