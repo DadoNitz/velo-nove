@@ -65,9 +65,10 @@ export default function App() {
             </header>
 
             <div id="historia">
-              {chapters.map((c) => (
+              {chapters.map((c, i) => (
                 <section key={c.id} className="chapter" data-sec data-nav="orange" aria-labelledby={`${c.id}-t`}>
                   <div className="rv mini-wrap"><Mini colorId={colorId} focus={c.focus} /></div>
+                  <p className="kicker rv">{i + 1} de {chapters.length} · {c.callout.label.split(' · ')[0]}</p>
                   <p className="figure rv"><CountUp to={c.value} decimals={c.dec} mode="roll" duration={1.6} className="num" /> <span className="unit">{c.unit}</span></p>
                   <h2 id={`${c.id}-t`}><BlurText text={c.title} delay={70} /></h2>
                   <p className="rv">{c.text}</p>
