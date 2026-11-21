@@ -99,3 +99,11 @@ export const models: {
 export const brl = (n: number) => 'R$ ' + n.toLocaleString('pt-BR')
 
 export const points = ['São Paulo · Pinheiros', 'Curitiba · Batel', 'Belo Horizonte · Savassi']
+
+export const credits: { title: string; by: string; lic: string; url: string }[] = [
+  { title: 'Evening Cyclist', by: 'Nick Page Photos', lic: 'CC BY 2.0', url: 'https://www.flickr.com/photos/27506472@N04/8106152459' },
+  { title: 'Rama VIII Bridge & the Chao Phraya River, Bangkok Bicycle Tour', by: 'David McKelvey', lic: 'CC BY 2.0', url: 'https://commons.wikimedia.org/w/index.php?curid=112989780' },
+  { title: 'Bike rail, public stairs', by: 'La Citta Vita', lic: 'CC BY-SA 2.0', url: 'https://www.flickr.com/photos/49539505@N04/4764105631' },
+  { title: 'Yellow Lines', by: 'Tim Sullivan', lic: 'CC0', url: 'https://stocksnap.io/photo/yellow-lines-OJYARI0WOY' },
+  { title: 'Cyclist Super Highway', by: 'Kurayba', lic: 'CC BY-SA 2.0', url: 'https://www.flickr.com/photos/48503330@N08/52141470529' },
+]
