@@ -13,7 +13,7 @@ O nome carrega o conceito. *Nove* é o peso (9,4 kg) e é o trajeto (9 km de ida
 ## O que tem
 
 - **História pinada**: quatro capítulos (quadro, motor, bateria, correia). A cada um, a peça acende na bike, a etiqueta aparece e o número principal conta até o valor.
-- **Configurador de cor**: quatro cores, e a bike pinada troca com transição (sai, troca, volta por uma mola interrompível) enquanto o campo atrás muda de tom. Funciona com mouse, toque e setas do teclado.
+- **Configurador de cor com bike 3D**: quando a seção de cor cruza o meio da tela, a bike pinada vira um modelo three.js feito só de primitivas (tubos, rodas raiadas, correia, bateria no tubo inferior, motor no cubo). Arrastar gira 1:1; ao soltar, a velocidade é projetada (fórmula de desaceleração da Apple) e uma mola leva ao ângulo de repouso mais próximo herdando essa velocidade. Pegar a bike no meio do giro para onde ela está. Setas do teclado giram 45°. Trocar de cor anima o material a partir da cor atual (dá pra trocar de novo no meio). A troca 2D↔3D é um cross-fade na vista lateral, onde as duas são iguais.
 - **Comparativo de modelos**: tabela real com três modelos e um controle de km por dia que recalcula "a cada quantos dias recarregar".
 - **CTA de test-ride**: formulário sem backend que abre o e-mail do visitante com o pedido pronto (modelo e cor escolhidos entram junto).
 
@@ -26,9 +26,12 @@ O nome carrega o conceito. *Nove* é o peso (9,4 kg) e é o trajeto (9 km de ida
 - Movimento: rodas giram com o scroll, odômetro e barra de trajeto lineares ao scroll, wordmark que encolhe 7% ao sair da primeira tela, entradas escalonadas (60–80 ms), contagem dos números, foto final com leve zoom.
 - Feedback no toque: `:active` escala o botão na hora do press, não na soltura. Molas próprias (`src/spring.ts`) herdam posição e velocidade ao serem reapontadas, então trocar de cor no meio da transição não dá tranco.
 - `prefers-reduced-motion`: sem deslocamento, sem rotação de roda, sem contagem; o conteúdo continua inteiro.
-- Celular: o pin não cabe (cobriria o texto), então cada capítulo ganha a própria bike.
+- Celular: o pin não cabe (cobriria o texto), então cada capítulo ganha a própria bike (e o configurador, a própria bike 3D).
+- **Passe apple-design** (layout): escala tipográfica com tracking por tamanho (−0,035 em no display, −0,022 em nos títulos, +0,01 em no texto pequeno) e entrelinha inversa ao tamanho; uma escala de espaçamento em `rem` usada por todas as seções; rótulos "1 de 4 · Quadro" para orientação; ficha técnica em grade com filetes; comparativo numa medida centralizada.
+- **Materiais**: o menu é uma camada translúcida (`backdrop-filter`) com o conteúdo passando por baixo, e o cabeçalho da tabela de modelos gruda sob ele com o mesmo material. Com `prefers-reduced-transparency` ou `prefers-contrast: more`, ficam sólidos.
+- **3D sob demanda**: three.js só é baixado (import dinâmico, chunk separado) quando a seção de cor está a uma tela de distância, e o render é sob demanda (nada roda parado). Sem WebGL2 ou com `prefers-reduced-motion`, nada é baixado e fica o SVG.
 
-Medições locais (build de produção, desktop): Lighthouse 99 / 100 / 100 (desempenho, acessibilidade, boas práticas); LCP 1,7 s, CLS 0, TBT 40 ms.
+Medições locais (build de produção, Lighthouse 13): desktop 100 / 100 / 100 / 100 (desempenho, acessibilidade, boas práticas, SEO), LCP 0,2 s, CLS 0,001, TBT 0 ms; mobile 99 / 100 / 100 / 100, LCP 1,7 s, TBT 40 ms.
 
 ## Componentes React Bits
 
@@ -47,7 +50,7 @@ Edições locais: `BlurText` usa `<span>` na raiz (para viver dentro do `<h2>`),
 
 ## Stack
 
-React 19 · TypeScript · Vite · CSS puro (tokens em variáveis) · `@fontsource-variable/literata` · `motion` (exigido pelos componentes React Bits). As molas próprias e o scroll continuam em código local.
+React 19 · TypeScript · Vite · CSS puro (tokens em variáveis) · `@fontsource-variable/literata` · `motion` (exigido pelos componentes React Bits) · `three` (só no chunk do configurador, `src/Bike3D.tsx`). As molas próprias (`src/spring.ts`, com passagem de velocidade) e o scroll continuam em código local.
 
 ## Como rodar
 
@@ -76,11 +79,15 @@ Todas com licença livre, baixadas e comprimidas; os créditos também estão no
 
 As fotos mostram o mundo da bicicleta, nunca o produto: a Vélo Nove só existe como desenho em código.
 
+### Fotos novas (briefs)
+
+`docs/image-briefs.md` descreve cinco fotos que melhorariam o site (caminho, proporção, onde entram e o prompt em inglês). O código já está pronto: coloque o `.webp` em `public/img/` com o nome do brief e rode `npm run build`. O `vite.config.ts` lista a pasta na hora do build e cada foto nova entra com o próprio alt e legenda; se o arquivo não existir, continua a foto atual (sem 404), e o crédito da foto substituída sai do rodapé.
+
 ## Observações
 
 - O e-mail `testride@velonove.example` é um endereço de exemplo; troque antes de qualquer uso real.
 - Especificações, preços e a referência ao limite legal de 32 km/h são conteúdo de exemplo.
-- `docs/preview.png` é gerado por `node scripts/preview.mjs` com Chrome headless via CDP, em tempo real (precisa de `npx vite preview --port 4791` rodando).
+- `docs/preview.png` é gerado por `node scripts/preview.mjs` com Chrome headless via CDP, em tempo real (precisa de `npx vite preview --port 4791` rodando). Aceita `W`/`H` (viewport), `FULL=1` (página inteira) e um seletor no lugar do scroll, por exemplo `W=390 H=844 node scripts/preview.mjs http://localhost:4791/ shot.png '#cor'`.
 
 ## Licença
 
