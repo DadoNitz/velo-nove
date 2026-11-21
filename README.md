@@ -28,11 +28,26 @@ O nome carrega o conceito. *Nove* é o peso (9,4 kg) e é o trajeto (9 km de ida
 - `prefers-reduced-motion`: sem deslocamento, sem rotação de roda, sem contagem; o conteúdo continua inteiro.
 - Celular: o pin não cabe (cobriria o texto), então cada capítulo ganha a própria bike.
 
-Medições locais: Lighthouse 100 / 100 / 100 / 92 (desempenho, acessibilidade, boas práticas, SEO; o SEO restante era o `robots.txt`, já adicionado).
+Medições locais (build de produção, desktop): Lighthouse 99 / 100 / 100 (desempenho, acessibilidade, boas práticas); LCP 1,7 s, CLS 0, TBT 40 ms.
+
+## Componentes React Bits
+
+Copiados de [reactbits.dev](https://reactbits.dev) (variantes TS) para `src/react-bits/`, com a dependência `motion`. Todos respeitam `prefers-reduced-motion` (sem movimento, conteúdo legível).
+
+| Componente | Onde |
+| --- | --- |
+| `BlurText` | Títulos h2 de cada capítulo, ficha técnica, configurador, comparativo e test-ride (palavra a palavra, ao entrar na tela) |
+| `CountUp` (modo *roll*) | Números grandes dos capítulos e da ficha técnica: dígitos rolam como um odômetro |
+| `Magnet` | Botões "Agendar test-ride" (hero e configurador) puxam levemente em direção ao cursor |
+| `ClickSpark` | Página inteira: faíscas laranja a cada clique |
+| `ShinyText` | Wordmark "vélo nove" no hero: brilho que atravessa a palavra |
+| `TiltedCard` | Fotos dos capítulos: inclinação 3D, brilho e sombra seguindo o ponteiro |
+
+Edições locais: `BlurText` usa `<span>` na raiz (para viver dentro do `<h2>`), `CountUp` usa vírgula decimal (pt-BR) e `TiltedCard` carrega a imagem com `loading="lazy"`.
 
 ## Stack
 
-React 19 · TypeScript · Vite · CSS puro (tokens em variáveis) · `@fontsource-variable/literata`. Sem biblioteca de animação.
+React 19 · TypeScript · Vite · CSS puro (tokens em variáveis) · `@fontsource-variable/literata` · `motion` (exigido pelos componentes React Bits). As molas próprias e o scroll continuam em código local.
 
 ## Como rodar
 
@@ -65,7 +80,7 @@ As fotos mostram o mundo da bicicleta, nunca o produto: a Vélo Nove só existe 
 
 - O e-mail `testride@velonove.example` é um endereço de exemplo; troque antes de qualquer uso real.
 - Especificações, preços e a referência ao limite legal de 32 km/h são conteúdo de exemplo.
-- `docs/preview.png` é gerado por `node scripts/preview.mjs` com Chrome headless (precisa de um servidor de pé em `http://localhost:4791/`).
+- `docs/preview.png` é gerado por `node scripts/preview.mjs` com Chrome headless via CDP, em tempo real (precisa de `npx vite preview --port 4791` rodando).
 
 ## Licença
 

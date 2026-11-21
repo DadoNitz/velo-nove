@@ -252,3 +252,4 @@ thead th { padding-top: 24px; padding-bottom: 20px; }
 .photo .tilted-card__body { aspect-ratio: 8 / 5; }
 h2 > span { max-width: 20ch; }
 .ride h2 > span { max-width: 16ch; }
+html { overflow-x: clip; }  /* the 3D tilt on the photos pokes a few px past the column */
